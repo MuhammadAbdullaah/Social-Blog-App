@@ -1,0 +1,95 @@
+<div class="container mx-auto p-6 max-w-3xl">
+  <h1 class="text-3xl font-bold text-center mb-6">Posts</h1>
+
+  <!-- Search Bar -->
+  <div class="flex justify-between items-center mb-6">
+    <%= form_with(url: posts_path, method: :get, local: true, class: "flex space-x-4") do |form| %>
+      <%= form.text_field :query, placeholder: "Search by title or author", class: "w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      <%= form.submit "Search", class: "bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition duration-200" %>
+    <% end %>
+  </div>
+
+  <!-- Link to create new post for authors and admins -->
+  <div class="flex justify-end mb-6">
+    <%= link_to 'New Post', new_post_path, class: "bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition duration-200" %>
+  </div>
+
+  <% @posts.each do |post| %>
+    <div class="mb-6 p-6 bg-white shadow-lg rounded-xl border border-gray-200 transition duration-300 hover:shadow-xl">
+      <!-- User Profile Image and Name -->
+      <div class="flex items-center space-x-4 mb-4">
+        <% if post.user.profile_image.attached? %>
+          <%= image_tag post.user.profile_image, class: "w-12 h-12 rounded-full object-cover" %>
+        <% else %>
+          <span class="w-12 h-12 rounded-full bg-gray-300"></span>
+        <% end %>
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800"><%= post.user.username %></h3>
+          <p class="text-sm text-gray-500">Posted on <%= post.created_at.strftime('%B %d, %Y') %></p>
+        </div>
+      </div>
+
+      <!-- Post Title (Above Image) -->
+      <h2 class="text-2xl font-semibold text-gray-800 mb-2 mt-4"><%= post.title %></h2>
+
+      <!-- Post Image (if exists) -->
+      <% if post.image.attached? %>
+        <div class="mb-4 overflow-hidden rounded-lg shadow-md">
+          <%= image_tag post.image, class: 'w-full h-48 object-cover hover:scale-105 transform transition duration-300' %> 
+        </div>
+      <% end %>
+
+      <!-- Post Content (Shortened and Toggle Read More) -->
+      <div class="mb-4">
+        <p class="post-content text-gray-700" id="content-<%= post.id %>">
+          <%= post.content.truncate(150) %>
+          <span class="read-more text-blue-500 cursor-pointer" onclick="toggleContent('<%= post.id %>')">Read More</span>
+        </p>
+        <p class="full-content hidden text-gray-700" id="full-content-<%= post.id %>">
+          <%= post.content %>
+          <span class="read-less text-blue-500 cursor-pointer" onclick="toggleContent('<%= post.id %>')">Read Less</span>
+        </p>
+      </div>
+
+      <!-- Post Actions (Like, Comment, Share) -->
+      <div class="flex justify-between items-center text-sm text-gray-600 mb-4">
+        <div class="flex space-x-4">
+          <!-- Like Button -->
+          <%= link_to 'Like', '#', class: "text-blue-500 hover:text-blue-600" %>
+          <!-- Comment Button -->
+          <%= link_to 'Comment', '#', class: "text-blue-500 hover:text-blue-600" %>
+          <!-- Share Button -->
+          <%= link_to 'Share', '#', class: "text-blue-500 hover:text-blue-600" %>
+        </div>
+
+        <div class="flex space-x-4">
+          <!-- Only show 'Show' button if the user is the author or an admin -->
+          <%= link_to 'Show', post_path(post), class: "bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-600 transition duration-200" %>
+
+          <!-- Edit and Delete buttons only visible to the author or admin -->
+          <% if current_user && (current_user == post.user || current_user.admin?) %>
+            <%= link_to 'Edit', edit_post_path(post), class: "bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-600 transition duration-200" %>
+            <%= button_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: "bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition duration-200" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
+<script>
+  // Toggle read more/less content for each post
+  function toggleContent(postId) {
+    var fullContent = document.getElementById("full-content-" + postId);
+    var shortContent = document.getElementById("content-" + postId);
+    
+    if (fullContent.classList.contains("hidden")) {
+      fullContent.classList.remove("hidden");
+      shortContent.classList.add("hidden");
+    } else {
+      fullContent.classList.add("hidden");
+      shortContent.classList.remove("hidden");
+    }
+  }
+</script>

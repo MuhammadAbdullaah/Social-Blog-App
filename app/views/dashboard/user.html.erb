@@ -1,0 +1,18 @@
+<h1 class="text-3xl font-bold text-green-600">User Dashboard</h1>
+<p class="mb-4">Welcome to your dashboard! Manage your posts, update your profile, and more.</p>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <!-- Your Posts Section -->
+  <div class="bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-xl font-semibold text-gray-800">Your Posts</h2>
+    <p class="text-gray-600">View, edit, or delete your blog posts.</p>
+    <%= link_to 'View My Posts', my_posts_posts_path, class: 'text-blue-500 mt-4 inline-block' %>
+  </div>
+
+  <!-- Profile Section -->
+  <div class="bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-xl font-semibold text-gray-800">Profile</h2>
+    <p class="text-gray-600">Manage your personal information and settings.</p>
+    <%= link_to 'Edit Profile', '#', class: 'text-blue-500 mt-4 inline-block' %>
+  </div>
+</div>

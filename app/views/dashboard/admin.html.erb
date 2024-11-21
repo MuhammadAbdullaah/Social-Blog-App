@@ -1,0 +1,25 @@
+<h1 class="text-3xl font-bold text-blue-600">Admin Dashboard</h1>
+<p class="mb-4">Welcome, Admin! Here you can manage the blog content, users, and settings.</p>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <!-- Manage Posts Section -->
+  <div class="bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-xl font-semibold text-gray-800">Manage Posts</h2>
+    <p class="text-gray-600">Create, edit, or delete blog posts.</p>
+    <%= link_to 'View Posts', posts_path, class: 'text-blue-500 mt-4 inline-block' %>
+  </div>
+
+  <!-- Manage Users Section -->
+  <div class="bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-xl font-semibold text-gray-800">Manage Users</h2>
+    <p class="text-gray-600">View and manage all registered users.</p>
+    <%= link_to 'View Users', users_path, class: 'text-blue-500 mt-4 inline-block' %>
+  </div>
+
+  <!-- Settings Section -->
+  <div class="bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-xl font-semibold text-gray-800">Settings</h2>
+    <p class="text-gray-600">Configure website settings and preferences.</p>
+    <%= link_to 'Site Settings', '#', class: 'text-blue-500 mt-4 inline-block' %>
+  </div>
+</div>

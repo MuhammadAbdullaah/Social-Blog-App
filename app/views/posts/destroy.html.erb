@@ -1,0 +1,14 @@
+<div class="max-w-md mx-auto bg-white shadow-md rounded-lg p-6 mt-8 text-center">
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">Confirm Deletion</h2>
+  <p class="text-gray-600 mb-6">
+    Are you sure you want to delete this post titled "<%= @post.title %>"?
+  </p>
+  
+  <div class="flex justify-center space-x-4">
+    <!-- Confirm Delete Button -->
+    <%= button_to 'Yes, Delete', confirm_destroy_post_path(@post), method: :delete, class: 'bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' %>
+    
+    <!-- Cancel Button -->
+    <%= link_to 'Cancel', posts_path, class: 'bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded' %>
+  </div>
+</div>
